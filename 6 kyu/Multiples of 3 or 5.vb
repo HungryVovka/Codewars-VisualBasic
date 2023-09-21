@@ -23,7 +23,7 @@ Module Kata
             Else
                 Continue For
             End If
-        Next i
+        Next
         Return mult
     End Function
 End Module
