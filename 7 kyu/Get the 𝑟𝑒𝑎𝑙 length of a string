@@ -1,0 +1,56 @@
+' -----------------------------------------------------------
+// In languages that use UTF-16 encoding for strings (JavaScript, JVM languages like Java, .NET languages like C#...), if the code point of a character is 
+// larger than 0xFFFF, it will be treated as two code units.
+// 
+// For example:
+// 
+// The code point of the emoji 🙉 (U+1F649, Hear-No-Evil Monkey) is 0x1F649.
+// 
+// '🙉'.length; // 2
+// 
+// Write a function that returns the real length of a string.
+// 
+// "abcd"   --> 4
+// "🙉"     --> 1
+// "😸🦌🚀" --> 3
+' -----------------------------------------------------------
+
+Public Module Kata
+    Public Function GetRealLength(str As String) As Int32
+        Dim i As Integer = 0
+        Dim lunghezza As Integer = 0
+        While i < str.Length
+            Dim carattere As Char = str(i)
+            If Char.IsHighSurrogate(carattere) _ 
+                AndAlso (i + 1 < str.Length) _
+                AndAlso Char.IsLowSurrogate(str(i + 1)) Then
+                i += 2
+            Else
+                i += 1
+            End If
+            lunghezza += 1
+        End While
+        Return lunghezza
+    End Function
+End Module
+
+' -----------------------------------------------------------
+' License
+' Tasks are the property of Codewars (https://www.codewars.com/) 
+' and users of this resource.
+' 
+' All solution code in this repository 
+' is the personal property of Vladimir Rukavishnikov
+' (vladimirrukavishnikovmail@gmail.com).
+' 
+' Copyright (C) 2025 Vladimir Rukavishnikov
+' 
+' This file is part of the HungryVovka/Codewars-VisualBasic
+' (https://github.com/HungryVovka/Codewars-VisualBasic)
+' 
+' License is GNU General Public License v3.0
+' (https://github.com/HungryVovka/Codewars-VisualBasic/blob/main/LICENSE)
+' 
+' You should have received a copy of the GNU General Public License v3.0
+' along with this code. If not, see http://www.gnu.org/licenses/
+' -----------------------------------------------------------
